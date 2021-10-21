@@ -1,0 +1,67 @@
+package headfirst.state.candy;
+
+
+public class ChicagoStoreKeeper {
+
+	ChicagoCandyStoreMenu chicagoCandyStoreMenu;
+	
+	 
+		public ChicagoStoreKeeper(ChicagoCandyStoreMenu chicagoCandyStoreMenu) {
+			this.chicagoCandyStoreMenu = chicagoCandyStoreMenu;
+		}
+		
+		public void cgPrintMenu() {
+			
+			Iterator cgIterator = chicagoCandyStoreMenu.createIterator();
+			System.out.println("\t\t\tMENU\n\t\t\t----\nChicago's CandyStore Menu\n----------- ----");
+			printMenu(cgIterator);
+			
+		}
+	 
+		private void printMenu(Iterator iterator) {
+			while (iterator.hasNext()) {
+				System.out.println("");
+				MenuItem menuItem = (MenuItem)iterator.next();
+				System.out.print(menuItem.getName() + ": ");
+				System.out.print(menuItem.getDescription());
+				System.out.println("\n $"+menuItem.getPrice());
+			}
+			System.out.println("");
+		}
+	 
+		public void printVegetarianMenu() {
+			printVegetarianMenu(chicagoCandyStoreMenu.createIterator());
+		}
+	 
+		public boolean isItemVegetarian(String name) {
+			Iterator dinnerIterator = chicagoCandyStoreMenu.createIterator();
+			if (isVegetarian(name, dinnerIterator)) {
+				return true;
+			}
+			return false;
+		}
+
+
+		private void printVegetarianMenu(Iterator iterator) {
+			while (iterator.hasNext()) {
+				MenuItem menuItem = (MenuItem)iterator.next();
+				if (menuItem.isVegetarian()) {
+					System.out.print(menuItem.getName());
+					System.out.println("\t\t" + menuItem.getPrice());
+					System.out.println("\t" + menuItem.getDescription());
+				}
+			}
+		}
+
+		private boolean isVegetarian(String name, Iterator iterator) {
+			while (iterator.hasNext()) {
+				MenuItem menuItem = (MenuItem)iterator.next();
+				if (menuItem.getName().equals(name)) {
+					if (menuItem.isVegetarian()) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+	}
